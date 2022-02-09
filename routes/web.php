@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MerchantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,9 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [HomeController::class, 'index']);
+
+Route::get('/merchant', [MerchantController::class, 'index']);
+Route::post('/merchant', [MerchantController::class, 'store']);
+Route::put('/merchant/{id}/update', [MerchantController::class, 'update']);
+Route::get('/merchant/{id}', [MerchantController::class, 'show']);
+Route::delete('/merchant/{id}', [MerchantController::class, 'destroy']);
