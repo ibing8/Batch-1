@@ -17,7 +17,6 @@ class MerchantController extends Controller
 
     // Melakukan penyimpanan/pembuatan data baru ke dalam tabel
     public function store(Request $request) {
-
         $merchant = new Merchant();
 
         $merchant->name = $request->name;
