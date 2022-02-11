@@ -17,6 +17,12 @@ class MerchantController extends Controller
 
     // Melakukan penyimpanan/pembuatan data baru ke dalam tabel
     public function store(Request $request) {
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['email', 'required'],
+            'password' => ['required'],
+        ]);
+
         $merchant = new Merchant();
 
         $merchant->name = $request->name;
@@ -32,6 +38,11 @@ class MerchantController extends Controller
 
     // Melakukan pembaharuan data
     public function update(Request $request, $id) {
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['email', 'required'],
+            'password' => ['required'],
+        ]);
 
         $merchant = Merchant::findOrFail($id);
 

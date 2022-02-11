@@ -16,6 +16,12 @@ class ProductController extends Controller
 
     // Melakukan penyimpanan/pembuatan data baru ke dalam tabel
     public function store(Request $request) {
+        $request->validate([
+            'name' => ['required'],
+            'category' => ['required'],
+            'thumbnail_image' => ['required'],
+        ]);
+
         $product = new Product();
 
         $product->name = $request->name;
@@ -29,6 +35,12 @@ class ProductController extends Controller
 
     // Melakukan pembaharuan data
     public function update(Request $request, $id) {
+        $request->validate([
+            'name' => ['required'],
+            'category' => ['required'],
+            'thumbnail_image' => ['required'],
+        ]);
+
         $product = Product::findOrFail($id);
 
         $product->name = $request->name;
