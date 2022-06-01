@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Merchant extends Model
+class Merchant extends Authenticatable
 {
     use HasFactory;
 
-    protected $guard = ['id'];
+    protected $guard = ['merchant'];
 
     protected $fillable = [
         'name',
@@ -17,5 +18,9 @@ class Merchant extends Model
         'password',
         'photo_profile',
         'status',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 }
