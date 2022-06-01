@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Routing\RouteUri;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,7 @@ Route::get('/', function () {
 // Route::get('/merchant/{id}', [MerchantController::class, 'show']);
 // Route::delete('/merchant/{id}', [MerchantController::class, 'destroy']);
 
-Route::resource('merchant', MerchantController::class)->except('create', 'edit');
+// Route::resource('merchant', MerchantController::class)->except('create', 'edit');
 
 // Route::get('/product', [ProductController::class, 'index']);
 // Route::post('/product', [ProductController::class, 'store']);
@@ -37,14 +38,25 @@ Route::resource('merchant', MerchantController::class)->except('create', 'edit')
 // Route::get('/product/{id}', [ProductController::class, 'show']);
 // Route::delete('/product/{id}', [ProductController::class, 'destroy']);
 
-Route::resource('product', ProductController::class)->except('create', 'edit');
+// Route::resource('product', ProductController::class)->except('create', 'edit');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::group(['middleware' => ['auth']], function() {
-//     Route::resource('merchant', MerchantController::class)->except('create', 'edit');
+Route::get('/login/merchant', [LoginController::class, 'showMerchantLoginForm']);
 
-//     Route::resource('product', ProductController::class)->except('create', 'edit');
-// });
+Route::group(['middleware' => ['auth:web']], function() {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('merchant', MerchantController::class)->except('create', 'edit');
+
+    Route::resource('product', ProductController::class)->except('create', 'edit');
+});
+
+Route::group(['middleware' => ['auth:merchant']], function() {
+    Route::view('/merchant', 'merchant');
+
+    // Route::resource('merchant', MerchantController::class)->except('create', 'edit');
+    Route::resource('product', ProductController::class)->except('create', 'edit');
+
+});
+Route::get('logout', [LoginController::class,'logout']);
